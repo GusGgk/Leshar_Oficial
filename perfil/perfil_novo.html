@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar nova Aula</title>
+    <link rel="stylesheet" href="aula_novo.css">
+</head>
+<body>
+    <h1>Criar nova aula</h1>
+    <hr>
+    <p>
+        Vamos criar uma nova aula
+    </p>
+    <div>
+        <div>
+            <label for="hora_inicio">Horário de início</label>
+            <input type="datetime-local" id="hora_inicio">
+        </div>
+    </div>
+     <div>
+        <div>
+            <label for="hora_fim">Horário de fim</label>
+            <input type="datetime-local" id="hora_fim">
+        </div>
+    </div>
+     <div>
+        <div>
+            <label for="mensagem">Descrição ou mensagem para a aula</label>
+            <input type="text" id="mensagem">
+        </div>
+    </div>
+    <div>
+        <div>
+            <button id="enviar">Enviar</button>
+        </div>
+    </div>
+
+    <script src="../js/aula_novo.js"></script>
+    <script src="../js/valida_sessao.js"></script>
+
+</body>
+</html>
