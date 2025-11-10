@@ -13,4 +13,4 @@ async function logoff() {
         alert("Você saiu do sistema.");
         window.location.href = "../login/";
     }  
-}   
+}  
