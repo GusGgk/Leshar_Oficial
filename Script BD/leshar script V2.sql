@@ -119,3 +119,6 @@ CREATE TABLE IF NOT EXISTS chat_message (
     FOREIGN KEY (remetente_id) REFERENCES usuario(id) ON DELETE CASCADE,
     FOREIGN KEY (destinatario_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
+
+ALTER TABLE aula 
+MODIFY COLUMN mensagem TEXT;

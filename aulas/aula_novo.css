@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #3AAF83;
+    --primary-hover-color: #F9883C;
+    --background: linear-gradient(135deg, #0a3c31, #35B194);
+    --container-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+    --font-family: 'Poppins', sans-serif;
+    --card-bg: rgba(255, 255, 255, 0.95);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--background);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Container principal */
+body > div:first-child {
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--container-shadow);
+    padding: 3rem;
+    width: 100%;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Título */
+h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Linha divisória */
+hr {
+    border: none;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    margin: 1.5rem 0;
+    border-radius: 10px;
+}
+
+/* Parágrafo descritivo */
+p {
+    color: #666;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+/* Container dos campos do formulário */
+body > div:not(:first-child) {
+    margin-bottom: 2rem;
+}
+
+/* Grupos de campos */
+body > div > div {
+    margin-bottom: 1.5rem;
+}
+
+/* Labels */
+label {
+    display: block;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+/* Campos de input */
+input[type="datetime-local"],
+input[type="text"] {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+input[type="datetime-local"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 20px rgba(58, 175, 131, 0.2);
+    transform: translateY(-2px);
+}
+
+input[type="datetime-local"]:hover,
+input[type="text"]:hover {
+    border-color: #bdbdbd;
+}
+
+/* Botão de enviar */
+#enviar {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(58, 175, 131, 0.3);
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+#enviar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+#enviar:hover {
+    background: var(--primary-hover-color);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(249, 136, 60, 0.4);
+}
+
+#enviar:hover::before {
+    left: 100%;
+}
+
+#enviar:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(249, 136, 60, 0.4);
+}
+
+/* Animações */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    
+    body > div:first-child {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    p {
+        font-size: 1rem;
+    }
+    
+    input[type="datetime-local"],
+    input[type="text"] {
+        padding: 0.8rem 1.2rem;
+    }
+    
+    #enviar {
+        padding: 1rem 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body > div:first-child {
+        padding: 1.5rem 1rem;
+        border-radius: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    p {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+    
+    body > div > div {
+        margin-bottom: 1.2rem;
+    }
+    
+    label {
+        font-size: 0.95rem;
+    }
+    
+    input[type="datetime-local"],
+    input[type="text"] {
+        padding: 0.7rem 1rem;
+        font-size: 0.95rem;
+    }
+    
+    #enviar {
+        padding: 0.9rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* Estilo para o placeholder */
+input::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Efeito de foco nos labels quando o input está focado */
+input:focus + label,
+input:focus ~ label {
+    color: var(--primary-color);
+}
+
+/* Melhorar a aparência do datetime-local */
+input[type="datetime-local"] {
+    cursor: pointer;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+    background: rgba(58, 175, 131, 0.1);
+}

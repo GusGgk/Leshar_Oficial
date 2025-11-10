@@ -8,6 +8,7 @@ $retorno = [
 ];
 
 if(isset($_GET['id'])){
+    $id = $_GET['id'];
 
     // Atribuição
     $hora_inicio = $_POST['hora_inicio'];
