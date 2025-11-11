@@ -3,9 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
     inserirBotao();
     carregarLista();
 
-    document.getElementById("novo").addEventListener("click", () => {
-        window.location.href = "perfil_novo.html";  
-    });
     document.getElementById("sair").addEventListener("click", () => {
         logoff();
     });
@@ -20,10 +17,20 @@ async function logoff() {
     }  
 }   
 
-function inserirBotao(){
-    var botao = "";
-    botao = "<button id='novo'> Novo Registro </button>";
-    document.getElementById("titulo").innerHTML += botao;
+async function inserirBotao(){
+    try{
+        const r = await fetch('../php/valida_sessao_admin.php', { credentials: 'include' });
+        const j = await r.json();
+        if(j.status === 'ok'){
+            const botao = "<button id='novo'> Novo Registro </button>";
+            document.getElementById("titulo").innerHTML += botao;
+            document.getElementById("novo").addEventListener("click", () => {
+                window.location.href = "perfil_novo.html";  
+            });
+        }
+    }catch(e){
+        // silencioso
+    }
 }
 async function excluir(id) {
     const retorno = await fetch('../php/perfil_excluir.php?id=' + id);

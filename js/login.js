@@ -1,10 +1,10 @@
-document.getElementById('entrar').addEventListener('click', () =>{
-    event.preventDefault();
+document.getElementById('entrar').addEventListener('click', (e) =>{
+    e.preventDefault();
     verificarLogin();
 });
 
-document.getElementById('cadastrar').addEventListener('click', () =>{
-    event.preventDefault();
+document.getElementById('cadastrar').addEventListener('click', (e) =>{
+    e.preventDefault();
     cadastrarUsuario();
 });
 
@@ -16,23 +16,26 @@ async function verificarLogin(){
     fd.append('LoginEmail', email);
     fd.append('LoginSenha', senha);
 
-    const retorno = await fetch("../php/login.php",{
-        method: "POST",
-        body: fd
-    });
+    try{
+        const retorno = await fetch("../php/login.php",{
+            method: "POST",
+            body: fd
+        });
+        const resposta = await retorno.json();
 
-    const resposta = await retorno.json();
-
-    if (resposta.status == "ok") {
-        alert("Login realizado com sucesso!");
-        if (resposta.data.tipo_usuario == "ADM") {
-            window.location.href = "../admin/"; 
+        if (resposta.status == "ok") {
+            alert("Login realizado com sucesso!");
+            if (resposta.data.tipo_usuario == "ADM") {
+                window.location.href = "../admin/"; 
+            } else {
+                window.location.href = "../home/";
+            }
         } else {
-            window.location.href = "../home/";
+            alert (resposta.mensagem || "Credenciais inválidas.");
         }
-    } else {
-        console.error("Erro no login:", error)
-        alert ("Credenciais inválidas.");
+    }catch(err){
+        console.error("Erro no login:", err);
+        alert("Não foi possível comunicar com o servidor. Verifique se o Apache está rodando.");
     }
 }
 

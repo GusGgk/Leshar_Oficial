@@ -1,44 +1,57 @@
 <?php
 include_once("conexao.php");
-
-
-if(isset($_GET['id'])){
-    $id = $_GET['id'];
-    $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario WHERE id = ?");
-    $stmt->bind_param("i", $id);
-} else {
-    // Se quiser listar todos os usuários (cuidado com privacidade!)
-    $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario");
-}
-
-
-$stmt->execute(); 
-// executa a query
-
-// obtém o resultado da query e armazena na variável resultado
-$resultado = $stmt->get_result(); 
-
-// começa a leitura dos resultados
-$tabela = []; 
+session_start();
 
 // inicialização do array de retorno
 $retorno = [
-    "status"=> "",
+    "status"=> "erro",
     "mensagem"=> "",
     "data"=> []
 ];
 
-if($resultado->num_rows > 0){ // condição se a query retornar registros
-    while($linha = $resultado-> fetch_assoc()){ //enquanto houver registros pega uma linha, transforma o resultado em um array associativo e armazene na tabela
-        $tabela[] = $linha; // armazena dentro de um array (neste caso tabela)
-    }
+if(!isset($_SESSION['usuario'])){
+    $retorno['mensagem'] = 'Não autenticado';
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($retorno);
+    exit;
+}
 
+$isAdmin = isset($_SESSION['usuario']['tipo_usuario']) && $_SESSION['usuario']['tipo_usuario'] === 'ADM';
+$sessionUserId = (int)($_SESSION['usuario']['id'] ?? 0);
+
+if(isset($_GET['id'])){
+    $id = (int)$_GET['id'];
+    if (!$isAdmin && $id !== $sessionUserId) {
+        $retorno['mensagem'] = 'Sem permissão para visualizar este perfil';
+        header('Content-Type: application/json;charset=utf-8');
+        echo json_encode($retorno);
+        exit;
+    }
+    $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario WHERE id = ?");
+    $stmt->bind_param("i", $id);
+} else {
+    if ($isAdmin) {
+        $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario");
+    } else {
+        // Usuário comum: retorna somente o próprio registro
+        $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario WHERE id = ?");
+        $stmt->bind_param("i", $sessionUserId);
+    }
+}
+
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+$tabela = [];
+if($resultado->num_rows > 0){
+    while($linha = $resultado->fetch_assoc()){
+        $tabela[] = $linha;
+    }
     $retorno = [
         "status" => "ok",
         "mensagem" => "registros encontrados com sucesso!",
         "data" => $tabela
     ];
-
 } else {
     $retorno = [
         "status" => "erro",
@@ -48,7 +61,7 @@ if($resultado->num_rows > 0){ // condição se a query retornar registros
 }
 
 $stmt->close();
-$conexao->close(); // fecha a conexao com o banco de dados
+$conexao->close();
 
-header('Content-Type: application/json;charset=utf-8'); 
-echo json_encode($retorno); // converte o array de retorno em json e exibe na tela
+header('Content-Type: application/json;charset=utf-8');
+echo json_encode($retorno);

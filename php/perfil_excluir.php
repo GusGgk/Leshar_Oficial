@@ -1,43 +1,51 @@
 <?php
 include_once("conexao.php");
+session_start();
 
-// inicialização do array de retorno
 $retorno = [
-    "status"=> "",
+    "status"=> "erro",
     "mensagem"=> "",
     "data"=> []
 ];
 
-if(isset($_GET['id'])){ // verifica se o id foi passado via GET
-    $id = $_GET['id']; // obtém o id via GET
-    $stmt = $conexao->prepare("DELETE FROM usuario WHERE id = ?");
-    $stmt->bind_param("i", $id); // "i" indica que o parâmetro é um inteiro
-    $stmt->execute(); // executa a query
-
-    if($stmt->affected_rows > 0){
-        $retorno = [
-            "status"=> "ok",
-            "mensagem"=> $stmt->affected_rows."registros modificados com sucesso",
-            "data"=> []
-        ];
-    }else{
-        $retorno = [
-            "status"=> "erro",
-            "mensagem"=> "Nenhum registro foi modificado",
-            "data"=> []
-        ];
-    }
-
-    $stmt->close();
-} else {
-    // inicialização do array de retorno
-    $retorno = [
-        "status"=> "erro",
-        "mensagem"=> "necessário informar o id para exclusão",
-        "data"=> []
-    ];
+if(!isset($_SESSION['usuario'])){
+    $retorno['mensagem'] = 'Não autenticado';
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($retorno);
+    exit;
 }
-$conexao->close(); // fecha a conexao com o banco de dados
+
+$isAdmin = isset($_SESSION['usuario']['tipo_usuario']) && $_SESSION['usuario']['tipo_usuario'] === 'ADM';
+$sessionUserId = (int)($_SESSION['usuario']['id'] ?? 0);
+
+if(isset($_GET['id'])){
+    $id = (int)$_GET['id'];
+    if(!$isAdmin && $id !== $sessionUserId){
+        $retorno['mensagem'] = 'Sem permissão para excluir este usuário';
+    } else {
+        $stmt = $conexao->prepare("DELETE FROM usuario WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if($stmt->affected_rows > 0){
+            $retorno = [
+                "status"=> "ok",
+                "mensagem"=> 'Usuário excluído',
+                "data"=> []
+            ];
+            // Se excluiu a si mesmo, encerra sessão
+            if($id === $sessionUserId){
+                session_destroy();
+            }
+        } else {
+            $retorno['mensagem'] = 'Nenhum registro foi modificado';
+        }
+        $stmt->close();
+    }
+} else {
+    $retorno['mensagem'] = 'necessário informar o id para exclusão';
+}
+
+$conexao->close();
 
 header('Content-Type: application/json;charset=utf-8'); 
-echo json_encode($retorno); // converte o array de retorno em json e exibe na tela
+echo json_encode($retorno);

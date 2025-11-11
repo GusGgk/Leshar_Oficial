@@ -28,7 +28,22 @@ $resultado = $stmt->get_result();
 if ($resultado->num_rows > 0) {
     $usuario = $resultado->fetch_assoc();
 
+    $senhaConfere = false;
     if (password_verify($senha, $usuario['senha'])) {
+        $senhaConfere = true;
+    } else if ($usuario['senha'] === $senha) {
+        // Fallback: senha em texto puro no banco (migração automática)
+        $senhaConfere = true;
+        $novoHash = password_hash($senha, PASSWORD_DEFAULT);
+        $upd = $conexao->prepare("UPDATE usuario SET senha = ? WHERE id = ?");
+        $uid = (int)$usuario['id'];
+        $upd->bind_param("si", $novoHash, $uid);
+        $upd->execute();
+        $upd->close();
+        $usuario['senha'] = $novoHash;
+    }
+
+    if ($senhaConfere) {
         $_SESSION["usuario"] = $usuario;
         $_SESSION["user_id"] = (int) $usuario['id'];
         $retorno = [

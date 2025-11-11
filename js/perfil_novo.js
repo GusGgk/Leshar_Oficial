@@ -1,5 +1,15 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     valida_sessao();
+    try{
+        const r = await fetch('../php/valida_sessao_admin.php', { credentials: 'include' });
+        const j = await r.json();
+        if(j.status !== 'ok'){
+            alert('Acesso restrito a administradores.');
+            window.location.href = 'index.html';
+        }
+    }catch(e){
+        window.location.href = 'index.html';
+    }
 });
 
 document.getElementById("enviar").addEventListener("click", function(){
