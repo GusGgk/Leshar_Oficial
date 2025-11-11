@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function logoff() {
     const retorno = await fetch('../php/logoff.php');
     const resposta = await retorno.json();
-    if (resposta.status == "Ok") {
+    if (resposta.status == "ok") {
         alert("Você saiu do sistema.");
         window.location.href = "../login/";
     }  
@@ -54,6 +54,7 @@ async function carregarLista(){
         <th>Email</th>
         <th>Bio</th>
         <th>Localização</th>
+        <th>Tipo de Usuário </th>
         <th>Data de Cadastro</th>
         <th>#</th>
         </tr>
@@ -68,6 +69,7 @@ async function carregarLista(){
         <td>${objeto.email}</td>
         <td>${objeto.bio}</td>
         <td>${objeto.localizacao}</td>
+        <td>${objeto.tipo_usuario}
         <td>${objeto.data_cadastro}</td>
         <td>
             <a href="perfil_alterar.html?id=${objeto.id}">Alterar</a>

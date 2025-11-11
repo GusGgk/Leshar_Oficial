@@ -4,30 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar nova Aula</title>
-    <link rel="stylesheet" href="aula_novo.css">
+    <link rel="stylesheet" href="../aulas/aula_novo.css">
 </head>
 <body>
-    <h1>Criar nova aula</h1>
+    <h1>Criar novo perfil</h1>
     <hr>
     <p>
-        Vamos criar uma nova aula
+        Vamos criar um novo perfil
     </p>
+<div>
+        <div>
+            <label for="nome">Nome</label>
+            <input type="text" id="nome">
+            <input type="hidden" id="id">
+        </div>
+    </div>
+     <div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email">
+        </div>
+     </div>
+     <div>
     <div>
         <div>
-            <label for="hora_inicio">Horário de início</label>
-            <input type="datetime-local" id="hora_inicio">
+            <label for="bio">Biografia</label>
+            <input type="text" id="bio">
         </div>
     </div>
-     <div>
+    <div>
         <div>
-            <label for="hora_fim">Horário de fim</label>
-            <input type="datetime-local" id="hora_fim">
+            <label for="localizacao">Localização</label>
+            <input type="text" id="localizacao">
         </div>
     </div>
-     <div>
+    <div>
         <div>
-            <label for="mensagem">Descrição ou mensagem para a aula</label>
-            <input type="text" id="mensagem">
+            <label for="tipo_usuario">Tipo de Usuário</label>
+            <input type="text" id="tipo_usuario">
         </div>
     </div>
     <div>
@@ -36,7 +50,7 @@
         </div>
     </div>
 
-    <script src="../js/aula_novo.js"></script>
+    <script src="../js/perfil_novo.js"></script>
     <script src="../js/valida_sessao.js"></script>
 
 </body>

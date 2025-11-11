@@ -1,5 +1,6 @@
 <?php
 include_once("conexao.php"); // todos os arquivos que precisam de conexao com o banco de dados
+session_start(); 
 
 $retorno = [
     "status"=> "",

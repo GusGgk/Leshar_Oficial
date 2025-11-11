@@ -21,13 +21,15 @@ async function novo(){
     var email = document.getElementById("email").value;
     var bio = document.getElementById("bio").value;
     var localizacao = document.getElementById("localizacao").value;
+    var tipo_usuario = document.getElementById("tipo_usuario").value;
 
-    if(nome.length > 0 && email.length > 0 && bio.length > 0 && localizacao.length > 0){
+    if(nome.length > 0 && email.length > 0 && bio.length > 0 && localizacao.length > 0 && tipo_usuario > 0){
         const fd = new FormData();
         fd.append('nome', nome);
         fd.append('email', email);
         fd.append('bio', bio);
         fd.append('localizacao', localizacao);
+        fd.append('tipo_usuario', tipo_usuario);
 
         const retorno = await fetch('../php/perfil_novo.php', {
             method: 'POST',

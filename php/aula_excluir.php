@@ -1,5 +1,6 @@
 <?php
 include_once("conexao.php");
+session_start(); 
 
 // inicialização do array de retorno
 $retorno = [

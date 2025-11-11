@@ -27,14 +27,14 @@ if(isset($_GET['id'])){
         echo json_encode($retorno);
         exit;
     }
-    $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario WHERE id = ?");
+    $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, tipo_usuario, data_cadastro FROM usuario WHERE id = ?");
     $stmt->bind_param("i", $id);
 } else {
     if ($isAdmin) {
-        $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario");
+        $stmt = $conexao->prepare("SELECT id, nome,senha, bio, localizacao,tipo_usuario, data_cadastro FROM usuario");
     } else {
         // Usuário comum: retorna somente o próprio registro
-        $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario WHERE id = ?");
+        $stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, tipo_usuario, data_cadastro FROM usuario WHERE id = ?");
         $stmt->bind_param("i", $sessionUserId);
     }
 }

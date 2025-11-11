@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function logoff() {
     const retorno = await fetch('../php/logoff.php');
     const resposta = await retorno.json();
-    if (resposta.status == "Ok") {
+    if (resposta.status == "ok") {
         alert("Você saiu do sistema.");
         window.location.href = "../login/";
     }  

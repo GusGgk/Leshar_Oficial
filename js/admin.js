@@ -51,6 +51,7 @@ function montarAtalhos(){
       const r = await fetch('../php/logoff.php');
       const j = await r.json();
       if(j.status === 'ok'){
+        alert("Você saiu do sistema.");
         window.location.href = '../login/';
       }
     }catch(e){

@@ -1,5 +1,6 @@
 <?php
 include_once("conexao.php");
+session_start(); 
 
 
 if(isset($_GET['id'])){ // verifica se o id foi passado via GET
