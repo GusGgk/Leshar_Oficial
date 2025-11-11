@@ -11,24 +11,26 @@ $retorno = [
 ];
 
 // Atribuição
-$hora_inicio = $_POST['hora_inicio'];
-$hora_fim = $_POST['hora_fim'];
+
+$resultado = $stmt->prepare("SELECT id FROM aluno WHERE email = ?")
+
+$aluno_id = $_POST['email_aluno'];
+$aula_id = $_POST['aula_id'];
 $mensagem = $_POST['mensagem'];
 
-$stmt = $conexao->prepare("INSERT INTO aula (hora_inicio, hora_fim,mensagem)
+$mentor_id = $_SESSION['user_id'];
+
+
+$stmt = $conexao->prepare("INSERT INTO aula (email_aluno, hora_fim,mensagem)
  VALUES (?,?,?)");
-$stmt->bind_param("sss",$hora_inicio,$hora_fim,$mensagem); // s = string, i = inteiro
+$stmt->bind_param("sss",$email_aluno,$hora_fim,$mensagem); // s = string, i = inteiro
 $stmt->execute(); // executa a query
 
  if($stmt->affected_rows > 0){
-        $id_gerado = $stmt->insert_id;
-
         $retorno = [
             "status"=> "ok",
             "mensagem"=> $stmt->affected_rows." registros inseridos com sucesso",
-            "data"=> [
-                "id" => $id_gerado
-            ]
+            "data"=> []
         ];
  }else{
         $retorno = [

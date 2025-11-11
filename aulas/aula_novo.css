@@ -124,7 +124,7 @@ input[type="text"]:hover {
     cursor: pointer;
     box-shadow: 0 8px 25px rgba(58, 175, 131, 0.3);
     transition: all 0.3s ease;
-    width: 100%;
+    width: 50%;
     margin-top: 1rem;
     position: relative;
     overflow: hidden;
@@ -259,4 +259,8 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 
 input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
     background: rgba(58, 175, 131, 0.1);
+}
+
+#segunda_div{
+    display: none;
 }
