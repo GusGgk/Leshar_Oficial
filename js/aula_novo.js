@@ -64,7 +64,7 @@ async function novo_email_aluno(){
         
         const fd = new FormData();
         fd.append('email_aluno', email_aluno);
-        fd.append('id_aula', idAulaAtual); // <--- ENVIANDO O ID DA AULA
+        fd.append('aula_id', idAulaAtual); // ENVIA O ID DA AULA PRO PHP FAZER A CONSULTA DO ID COM OS JOINS LÁ
 
         const retorno = await fetch('../php/participante_aula_novo.php', {
             method: 'POST',
@@ -75,6 +75,7 @@ async function novo_email_aluno(){
 
         if (resposta.status === 'ok'){
             alert('Sucesso! Aluno vinculado à aula ' + idAulaAtual);
+            window.location.href = '../aulas/index.html'; 
         } else {
             alert('Erro: ' + resposta.mensagem);
         }

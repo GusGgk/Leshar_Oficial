@@ -10,40 +10,57 @@ $retorno = [
     "data"=> []
 ];
 
-// Atribuição
+// atribuicao
 
-$resultado = $stmt->prepare("SELECT id FROM aluno WHERE email = ?")
-
-$aluno_id = $_POST['email_aluno'];
+$email_aluno = $_POST['email_aluno'];
 $aula_id = $_POST['aula_id'];
-$mensagem = $_POST['mensagem'];
 
 $mentor_id = $_SESSION['user_id'];
 
 
-$stmt = $conexao->prepare("INSERT INTO aula (email_aluno, hora_fim,mensagem)
- VALUES (?,?,?)");
-$stmt->bind_param("sss",$email_aluno,$hora_fim,$mensagem); // s = string, i = inteiro
-$stmt->execute(); // executa a query
+$stmt_busca = $conexao->prepare("
+    SELECT a.id AS aluno_id
+    FROM usuario u
+    INNER JOIN aluno a ON u.id = a.usuario_id
+    WHERE u.email = ?
+");
+$stmt_busca->bind_param("s", $email_aluno);
+$stmt_busca->execute();
+$resultado_busca = $stmt_busca->get_result();
 
- if($stmt->affected_rows > 0){
+if($resultado_busca->num_rows > 0) {
+    $aluno_data = $resultado_busca->fetch_assoc();
+    $aluno_id = $aluno_data['aluno_id'];
+    
+    //SEGUNDA ETAPA inserir na tabela participante_aula com o aluno_id encontrado
+    $stmt_insert = $conexao->prepare("INSERT INTO participante_aula (aula_id, mentor_id, aluno_id) VALUES (?,?,?)");
+    $stmt_insert->bind_param("iii", $aula_id, $mentor_id, $aluno_id); // "iii" = 3 inteiros
+    $stmt_insert->execute();
+    
+    if($stmt_insert->affected_rows > 0) {
         $retorno = [
             "status"=> "ok",
-            "mensagem"=> $stmt->affected_rows." registros inseridos com sucesso",
+            "mensagem"=> $stmt_insert->affected_rows." registro(s) inserido(s) com sucesso",
             "data"=> []
         ];
- }else{
+    } else {
         $retorno = [
             "status"=> "erro",
-            "mensagem"=> "0 registros inseridos",
+            "mensagem"=> "Erro ao inserir participante na aula",
             "data"=> []
         ];
     }
+    $stmt_insert->close();
+} else {
+    $retorno = [
+        "status"=> "erro",
+        "mensagem"=> "Email do aluno não encontrado ou sem perfil de aluno",
+        "data"=> []
+    ];
+}
 
-$stmt->close();
-
- // fecha a conexao com o banco de dados
+$stmt_busca->close();
 $conexao->close();
 header('Content-Type: application/json;charset=utf-8');
-echo json_encode($retorno); // converte o array de retorno em json e exibe na tela
-
+echo json_encode($retorno);
+?>

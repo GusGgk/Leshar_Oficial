@@ -39,6 +39,7 @@ async function excluir(id) {
 async function carregarLista(){
     const retorno = await fetch('../php/aula_get.php');
     const resposta = await retorno.json();
+    
     if (resposta.status == "ok") {
         var html = `<table>
         <thead>
@@ -46,6 +47,8 @@ async function carregarLista(){
         <th>Hora de Início</th>
         <th>Hora de Término</th>
         <th>Descrição/Mensagem da aula</th>
+        <th>Aluno</th>
+        <th>Mentor</th>
         <th>#</th>
         </tr>
         </thead>
@@ -60,6 +63,8 @@ async function carregarLista(){
         <td>${objeto.hora_inicio}</td>
         <td>${objeto.hora_fim}</td>
         <td>${objeto.mensagem}</td>
+        <td>${objeto.aluno_nome}</td>
+        <td>${objeto.mentor_nome}</td>
         <td>
             <a href="aula_alterar.html?id=${objeto.id}">Alterar</a>
             <a href="#" onclick='excluir(${objeto.id})'>Excluir</a>
