@@ -8,17 +8,21 @@ $retorno = [
     "data"=> []
 ];
 
-// Validação de ADM 
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['tipo_usuario'] !== 'ADM'){
-    $retorno["status"] = "erro";
     $retorno["mensagem"] = "Acesso negado. Requer privilégios de Administrador.";
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($retorno);
     exit;
 }
 
-// Lógica de busca 
-$stmt = $conexao->prepare("SELECT * FROM categoria_habilidade ORDER BY nome ASC");
+if(isset($_GET['id'])){ 
+    $id = $_GET['id'];
+    $stmt = $conexao->prepare("SELECT * FROM categoria_habilidade WHERE id = ?");
+    $stmt->bind_param("i", $id);
+} else {
+    $stmt = $conexao->prepare("SELECT * FROM categoria_habilidade ORDER BY nome ASC");
+}
+
 $stmt->execute(); 
 $resultado = $stmt->get_result(); 
 
@@ -34,9 +38,9 @@ if($resultado->num_rows > 0){
     ];
 } else {
     $retorno = [
-        "status" => "ok", 
-        "mensagem" => "Nenhuma categoria cadastrada ainda.",
-        "data" => []
+        "status" => "ok",
+        "mensagem" => "Não encontrou registros",
+        "data" => [] // data vazia
     ];
 }
 

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Categorias</title>
-    <link rel="stylesheet" href="../aulas/styles.css">
+    <title>Gestão de Categorias - Admin</title>
+    <link rel="stylesheet" href="../aulas/styles.css"> 
 </head>
 <body>
     <div class="page">
@@ -13,25 +13,29 @@
             <p class="subtitle">Painel Admin</p>
             <nav>
                 <ul>
-                    <li><a href="../admin/index.html">Home Admin</a></li>
-                    <li><a href="../perfil/index.html">Gerenciar Usuários</a></li>
-                    <li><a href="../aulas/index.html">Gerenciar Aulas</a></li>
-                    <li><a href="../admin/categorias.html">Gerenciar Categorias</a></li>
-                    <button id="sair">Sair</button>
+                <li><a href="../admin/index.html">Home Admin</a></li>
+                <li><a href="../perfil/index.html">Gerir Usuários</a></li>
+                <li><a href="../aulas/index.html">Gerir Aulas</a></li>
+                <li><a href="../admin/categorias.html">Gerir Categorias</a></li>
+                <button id="sair" style="padding: 10px 20px; margin: 1rem 1.5rem 0; width: calc(100% - 3rem);">Sair</button>
                 </ul>
             </nav>
         </aside>
 
-        <div id="titulo">
-            <h1>Gestão de Categorias de Habilidade</h1>
-            <p>Adicione ou remova as categorias que os usuários poderão selecionar.</p>
+        <main>
+            <div id="titulo">
+                <h1>Gestão de Categorias de Habilidade</h1>
+                <p>Aqui podes adicionar, editar ou remover as categorias que os utilizadores podem escolher.</p>
             </div>
-        <div id="lista">
+            
+            <div id="lista">
             </div>
+        </main>
+
     </div>
     
-    <script src="../js/admin_categorias.js"></script>
-    
     <script src="../js/valida_sessao.js"></script> 
+    <script src="../js/admin_categorias.js"></script>
+
 </body>
 </html>
