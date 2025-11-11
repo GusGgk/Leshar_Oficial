@@ -27,12 +27,11 @@ if(isset($_GET['id'])){
         $email = $_POST['email'] ?? '';
         $bio = $_POST['bio'] ?? '';
         $localizacao = $_POST['localizacao'] ?? '';
-        $tipo_usuario = $_POST['tipo_usuario'] ?? '';
         if(strlen($nome)===0 || strlen($email)===0){
             $retorno['mensagem'] = 'Nome e email são obrigatórios';
         } else {
-            $stmt = $conexao->prepare("UPDATE usuario SET nome = ?, email = ?, bio = ?, localizacao = ?, tipo_usuario = ? WHERE id = ?");
-            $stmt->bind_param("sssssi", $nome, $email, $bio, $localizacao, $id, $tipo_usuario );
+            $stmt = $conexao->prepare("UPDATE usuario SET nome = ?, email = ?, bio = ?, localizacao = ? WHERE id = ?");
+            $stmt->bind_param("ssssi", $nome, $email, $bio, $localizacao, $id);
             $stmt->execute();
             if($stmt->affected_rows > 0){
                 $retorno = [
