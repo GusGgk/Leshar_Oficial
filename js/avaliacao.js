@@ -1,11 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     valida_sessao();
-    inserirBotao();
+    inserirBotao(); 
     carregarLista();
 
-    document.getElementById("novo").addEventListener("click", () => {
-        window.location.href = "avaliacao_novo.html";  
-    });
     document.getElementById("sair").addEventListener("click", () => {
         logoff();
     });
@@ -23,7 +20,13 @@ async function logoff() {
 function inserirBotao(){
     var botao = "";
     botao = "<button id='novo'> Novo Registro </button>";
-    document.getElementById("titulo").innerHTML += botao;
+    const tituloDiv = document.getElementById("titulo");
+    if(tituloDiv) {
+        tituloDiv.innerHTML += botao;
+        document.getElementById("novo").addEventListener("click", () => {
+            window.location.href = "avaliacao_novo.html";  
+        });
+    }
 }
 async function excluir(id) {
     const retorno = await fetch('../php/avaliacao_excluir.php?id=' + id);
@@ -43,23 +46,25 @@ async function carregarLista(){
         var html = `<table>
         <thead>
         <tr>
-        <th>pontuação</th>
-        <th>data</th>
+        <th>Pontuação</th>
+        <th>Data</th>
+        <th>Observação</th>
+        <th>Aluno</th>
+        <th>Mentor</th>
         <th>#</th>
         </tr>
         </thead>
         <tbody>`;
-    // farei um laço para preencher as linhas
+    
     for(var i=0; i < resposta.data.length; i++){
         var objeto = resposta.data[i];
-
         html += 
         `
         <tr>
         <td>${objeto.pontuacao}</td>
         <td>${objeto.data}</td>
-        <td>
-            <a href="aula_alterar.html?id=${objeto.id}">Alterar</a>
+        <td>${objeto.mensagem || '---'}</td> <td>${objeto.aluno_nome}</td> <td>${objeto.mentor_nome}</td> <td>
+            <a href="avaliacao_alterar.html?id=${objeto.id}">Alterar</a>
             <a href="#" onclick='excluir(${objeto.id})'>Excluir</a>
         </td>
         </tr>
@@ -69,6 +74,6 @@ async function carregarLista(){
             </table>`;
     document.getElementById("lista").innerHTML = html;
     }else{
-        alert("Erro!" + resposta.mensagem);
+        document.getElementById("lista").innerHTML = `<p style="color: white; text-align: center;">${resposta.mensagem}</p>`;
     }
 }

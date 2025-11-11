@@ -53,22 +53,28 @@ async function carregarLista(){
         </tr>
         </thead>
         <tbody>`;
-    // farei um laço para preencher as linhas
+
     for(var i=0; i < resposta.data.length; i++){
         var objeto = resposta.data[i];
-
+        let linkAvaliar = '';
+        if (objeto.participante_aula_id) {
+            //passa o ID do participante pela URL
+            linkAvaliar = `<a href="../avaliacao/avaliacao_novo.html?pa_id=${objeto.participante_aula_id}">Avaliar</a>`;
+        }
         html += 
         `
         <tr>
         <td>${objeto.hora_inicio}</td>
         <td>${objeto.hora_fim}</td>
         <td>${objeto.mensagem}</td>
-        <td>${objeto.aluno_nome}</td>
-        <td>${objeto.mentor_nome}</td>
+        
+        <td>${objeto.aluno_nome || 'Aguardando'}</td>
+        <td>${objeto.mentor_nome || '---'}</td>
+        
         <td>
             <a href="aula_alterar.html?id=${objeto.id}">Alterar</a>
             <a href="#" onclick='excluir(${objeto.id})'>Excluir</a>
-        </td>
+            ${linkAvaliar} </td>
         </tr>
         `;
     }
@@ -76,6 +82,6 @@ async function carregarLista(){
             </table>`;
     document.getElementById("lista").innerHTML = html;
     }else{
-        alert("Erro!" + resposta.mensagem);
+        document.getElementById("lista").innerHTML = `<p style="color: white; text-align: center;">${resposta.mensagem}</p>`;
     }
 }

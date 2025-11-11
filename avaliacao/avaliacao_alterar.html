@@ -1,43 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar aula criada</title>
-    <link rel="stylesheet" href="aula_alterar.css">
+    <title>Alterar Avaliação</title>
+    <link rel="stylesheet" href="../aulas/aula_alterar.css">
 </head>
 <body>
-    <h1>Alteração de Aula.</h1>
-    <hr>
-    <p>
-        Pode alterar os dados da aula criada.
-    </p>
     <div>
+        <h1>Alteração de Avaliação.</h1>
+        <hr>
+        <p>
+            Pode alterar os dados da avaliação criada.
+        </p>
         <div>
-            <label for="hora_inicio">Horário de Início</label>
-            <input type="datetime-local" id="hora_inicio">
-            <input type="hidden" id="id">
+            <div>
+                <label for="pontuacao">Pontuação (Ex: 0.0 a 5.0)</label>
+                <input type="number" step="0.1" id="pontuacao">
+                <input type="hidden" id="id">
+            </div>
         </div>
-    </div>
-     <div>
         <div>
-            <label for="hora_fim">Horário de fim</label>
-            <input type="datetime-local" id="hora_fim">
+            <div>
+                <label for="data">Data da Avaliação</label>
+                <input type="date" id="data">
+            </div>
         </div>
-    </div>
-     <div>
         <div>
-            <label for="mensagem">Descrição ou mensagem para aula</label>
-            <input type="text" id="mensagem">
+            <div>
+                <label for="mensagem">Observação (Mensagem)</label>
+                <input type="text" id="mensagem">
+            </div>
         </div>
-    </div>
-    <div>
         <div>
-            <button id="enviar">Enviar</button>
+            <div>
+                <button id="enviar">Enviar</button>
+            </div>
         </div>
-    </div>
-
-    <script src="../js/avaliacao_alterar.js"></script>
+    </div> <script src="../js/avaliacao_alterar.js"></script>
     <script src="../js/valida_sessao.js"></script>
 </body>
 </html>

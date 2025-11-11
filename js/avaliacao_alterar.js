@@ -14,33 +14,31 @@ async function fase1(id){
     const retorno = await fetch('../php/avaliacao_get.php?id='+id);
     const resposta = await retorno.json();
         if (resposta.status == "ok") {
-            alert("Sucesso! "+ resposta.mensagem);
             const reg = resposta.data[0];
-            document.getElementById("hora_inicio").value       = reg.hora_inicio;
-            document.getElementById("hora_fim").value    = reg.hora_fim;
-            document.getElementById("mensagem").value      = reg.mensagem;
-            document.getElementById("id").value         = id;
+            
+            document.getElementById("pontuacao").value = reg.pontuacao;
+            document.getElementById("data").value = reg.data;
+            document.getElementById("mensagem").value = reg.mensagem;
+            document.getElementById("id").value = id;
         }else{
             alert("Erro! " + resposta.mensagem);
         }
 }
-
-
 
 document.getElementById("enviar").addEventListener("click", function(){
     fase2();
 });
 
 async function fase2(){
-    var hora_inicio = document.getElementById("hora_inicio").value;
-    var hora_fim = document.getElementById("hora_fim").value;
+    var pontuacao = document.getElementById("pontuacao").value;
+    var data = document.getElementById("data").value;
     var mensagem = document.getElementById("mensagem").value;
     var id = document.getElementById("id").value;
 
-    if(hora_inicio.length > 0 && hora_fim.length > 0 && mensagem.length > 0){
+    if(pontuacao.length > 0 && data.length > 0){
         const fd = new FormData();
-        fd.append('hora_inicio', hora_inicio);
-        fd.append('hora_fim', hora_fim);
+        fd.append('pontuacao', pontuacao);
+        fd.append('data', data);
         fd.append('mensagem', mensagem);
 
         const retorno = await fetch('../php/avaliacao_alterar.php?id=' + id, {
@@ -55,6 +53,6 @@ async function fase2(){
             alert("Erro! " + resposta.mensagem);
         }
     } else {
-        alert("É necessário preencher todos os campos.")
+        alert("É necessário preencher Pontuação e Data.");
     }
 }

@@ -126,3 +126,6 @@ MODIFY COLUMN mensagem TEXT;
 INSERT INTO usuario(nome, email, senha, tipo_usuario)
 VALUES 
 ('ADM', 'adm@adm.com', 'adm', 'ADM'); 
+
+ALTER TABLE avaliacao
+ADD COLUMN mensagem TEXT NULL AFTER data;

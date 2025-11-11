@@ -2,53 +2,51 @@
 include_once("conexao.php");
 session_start(); 
 
-
-if(isset($_GET['id'])){ // verifica se o id foi passado via GET
-    $id = $_GET['id']; // obtém o id via GET
-    $stmt = $conexao->prepare("SELECT * FROM aula WHERE id = ?"); // prepara a query statement
-    $stmt->bind_param("i", $id); // "i" indica que o parâmetro é um inteiro
-} else {
-    $stmt = $conexao->prepare("SELECT * FROM aula"); // prepara a query statement sem filtro
-}
-
-
-$stmt->execute(); 
-// executa a query
-
-// obtém o resultado da query e armazena na variável resultado
-$resultado = $stmt->get_result(); 
-
-// começa a leitura dos resultados
-$tabela = []; 
-
-// inicialização do array de retorno
 $retorno = [
-    "status"=> "",
-    "mensagem"=> "",
+    "status"=> "erro",
+    "mensagem"=> "Não encontrou registros",
     "data"=> []
 ];
 
-if($resultado->num_rows > 0){ // condição se a query retornar registros
-    while($linha = $resultado-> fetch_assoc()){ //enquanto houver registros pega uma linha, transforma o resultado em um array associativo e armazene na tabela
-        $tabela[] = $linha; // armazena dentro de um array (neste caso tabela)
-    }
+if(isset($_GET['id'])){ 
+    $id = $_GET['id'];
+    $stmt = $conexao->prepare("SELECT * FROM aula WHERE id = ?"); 
+    $stmt->bind_param("i", $id);
+} else {
+    $stmt = $conexao->prepare("
+        SELECT 
+            a.id, a.hora_inicio, a.hora_fim, a.mensagem,
+            pa.id AS participante_aula_id,
+            u_aluno.nome AS aluno_nome,
+            u_mentor.nome AS mentor_nome
+        FROM aula a
+        LEFT JOIN participante_aula pa ON a.id = pa.aula_id
+        LEFT JOIN aluno al ON pa.aluno_id = al.id
+        LEFT JOIN usuario u_aluno ON al.usuario_id = u_aluno.id
+        LEFT JOIN mentor m ON pa.mentor_id = m.id
+        LEFT JOIN usuario u_mentor ON m.usuario_id = u_mentor.id
+        ORDER BY a.hora_inicio DESC
+    ");
+}
 
+$stmt->execute(); 
+$resultado = $stmt->get_result(); 
+$tabela = []; 
+
+if($resultado->num_rows > 0){
+    while($linha = $resultado-> fetch_assoc()){
+        $tabela[] = $linha;
+    }
     $retorno = [
         "status" => "ok",
         "mensagem" => "registros encontrados com sucesso!",
         "data" => $tabela
     ];
-
-} else {
-    $retorno = [
-        "status" => "erro",
-        "mensagem" => "Não encontrou registros",
-        "data" => []
-    ];
 }
 
 $stmt->close();
-$conexao->close(); // fecha a conexao com o banco de dados
+$conexao->close();
 
 header('Content-Type: application/json;charset=utf-8'); 
-echo json_encode($retorno); // converte o array de retorno em json e exibe na tela
+echo json_encode($retorno);
+?>

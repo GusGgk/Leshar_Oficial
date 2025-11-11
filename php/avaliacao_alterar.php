@@ -1,50 +1,44 @@
 <?php
-include_once("conexao.php"); // todos os arquivos que precisam de conexao com o banco de dados
+include_once("conexao.php");
 session_start(); 
 
 $retorno = [
-    "status"=> "",
+    "status"=> "erro",
     "mensagem"=> "",
     "data"=> []
 ];
 
 if(isset($_GET['id'])){
-    $id = $_GET['id'];
+    $id = (int)$_GET['id'];
 
-    // Atribuição
-    $hora_inicio = $_POST['hora_inicio'];
-    $hora_fim = $_POST['hora_fim'];
-    $mensagem = $_POST['mensagem'];
+    $pontuacao = $_POST['pontuacao'] ?? 0;
+    $data = $_POST['data'] ?? '';
+    $mensagem = $_POST['mensagem'] ?? '';
 
-    //preparar a query via statement para enviar ao banco de dados
-    $stmt = $conexao->prepare("UPDATE avaliacao SET hora_inicio = ?, hora_fim = ?, mensagem = ? WHERE id = ?");
-    $stmt->bind_param("sssi",$hora_inicio,$hora_fim,$mensagem, $id); // s = string, i = inteiro
-    $stmt->execute(); // executa a query
+    if (empty($data)) {
+        $retorno["mensagem"] = "O campo Data é obrigatório.";
+        echo json_encode($retorno);
+        exit;
+    }
+    $stmt = $conexao->prepare("UPDATE avaliacao SET pontuacao = ?, data = ?, mensagem = ? WHERE id = ?");
+    $stmt->bind_param("dssi",$pontuacao, $data, $mensagem, $id); // d, s, s, i
+    $stmt->execute(); 
 
     if($stmt->affected_rows > 0){
             $retorno = [
                 "status"=> "ok",
-                "mensagem"=> $stmt->affected_rows."registros inseridos com sucesso",
+                "mensagem"=> $stmt->affected_rows." registro alterado com sucesso",
                 "data"=> []
             ];
     }else{
-            $retorno = [
-                "status"=> "erro",
-                "mensagem"=> "0 registros inseridos",
-                "data"=> []
-            ];
+            $retorno["mensagem"] = "0 registros alterados (ou dados iguais). Erro: " . $stmt->error;
         }
     $stmt->close();
 } else {
-    // inicialização do array de retorno
-    $retorno = [
-        "status"=> "erro",
-        "mensagem"=> "necessário informar o id para alteração",
-        "data"=> []
-    ];
+    $retorno["mensagem"] = "Necessário informar o id para alteração";
 }
 
- // fecha a conexao com o banco de dados
 $conexao->close();
 header('Content-Type: application/json;charset=utf-8');
-echo json_encode($retorno); // converte o array de retorno em json e exibe
+echo json_encode($retorno);
+?>

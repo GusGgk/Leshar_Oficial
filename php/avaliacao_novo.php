@@ -1,24 +1,32 @@
 <?php
-include_once("conexao.php"); // todos os arquivos que precisam de conexao com o banco de dados
+include_once("conexao.php");
 session_start(); 
 
-
-// inicialização do array de retorno
 $retorno = [
-    "status"=> "",
-    "mensagem"=> "",
+    "status"=> "erro",
+    "mensagem"=> "Erro desconhecido",
     "data"=> []
 ];
 
-// Atribuição
-$pontuacao = $_POST[''];
-$data = $_POST['data'];
-$mensagem = $_POST['mensagem'];
+$pontuacao = $_POST['pontuacao'] ?? 0;
+$data = $_POST['data'] ?? ''; 
+$mensagem = $_POST['mensagem'] ?? '';
+$participante_aula_id = (int)($_POST['participante_aula_id'] ?? 0);
 
-$stmt = $conexao->prepare("INSERT INTO avaliacao (pontuacao, data,mensagem)
- VALUES (?,?,?)");
-$stmt->bind_param("sss",$pontuacao,$data,$mensagem); // s = string, i = inteiro
-$stmt->execute(); // executa a query
+if ($participante_aula_id <= 0) {
+    $retorno["mensagem"] = "ID do Participante da Aula é obrigatório.";
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($retorno);
+    exit;
+}
+if (empty($data)) {
+    $data = date('Y-m-d'); //data atual se não for enviada
+}
+
+$stmt = $conexao->prepare("INSERT INTO avaliacao (pontuacao, data, mensagem, participante_aula_id)
+ VALUES (?,?,?,?)");
+$stmt->bind_param("dssi",$pontuacao,$data,$mensagem, $participante_aula_id); 
+$stmt->execute();
 
  if($stmt->affected_rows > 0){
         $retorno = [
@@ -27,17 +35,11 @@ $stmt->execute(); // executa a query
             "data"=> []
         ];
  }else{
-        $retorno = [
-            "status"=> "erro",
-            "mensagem"=> "0 registros inseridos",
-            "data"=> []
-        ];
+        $retorno["mensagem"] = "0 registros inseridos. Erro: " . $stmt->error;
     }
 
 $stmt->close();
-
- // fecha a conexao com o banco de dados
 $conexao->close();
 header('Content-Type: application/json;charset=utf-8');
-echo json_encode($retorno); // converte o array de retorno em json e exibe na tela
-
+echo json_encode($retorno);
+?>

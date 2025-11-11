@@ -1,45 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar nova Aula</title>
-    <link rel="stylesheet" href="aula_novo.css">
+    <title>Registrar nova Avaliação</title>
+    <link rel="stylesheet" href="../aulas/aula_novo.css">
 </head>
 <body>
-    <h1>Criar nova aula</h1>
-    <hr>
-    <p>
-        Vamos criar uma nova aula
-    </p>
     <div>
-        <div>
-            <label for="hora_inicio">Horário de início</label>
-            <input type="datetime-local" id="hora_inicio">
-        </div>
-    </div>
-     <div>
-        <div>
-            <label for="hora_fim">Horário de fim</label>
-            <input type="datetime-local" id="hora_fim">
-        </div>
-    </div>
-     <div>
-        <div>
-            <label for="mensagem">Descrição ou mensagem para a aula</label>
-            <input type="text" id="mensagem">
-        </div>
-    </div>
-    <div>
-        <div>
-            <button id="enviar">Enviar</button>
-        </div>
-    </div>
+        <h1>Registrar nova avaliação</h1>
+        <hr>
+        <p>
+            Preencha os dados da avaliação da aula.
+        </p>
 
-    
+        <div>
+            <div>
+                <label for="participante_aula_id">ID da Aula (Participante)</label>
+                <input type="number" id="participante_aula_id" placeholder="ID da aula que participou">
+            </div>
+        </div>
 
-    <script src="../js/avaliacao_novo.js"></script>
+        <div>
+            <div>
+                <label for="pontuacao">Pontuação (Ex: 0.0 a 5.0)</label>
+                <input type="number" step="0.1" id="pontuacao" placeholder="4.5">
+            </div>
+        </div>
+        <div>
+            <div>
+                <label for="data">Data da Avaliação</label>
+                <input type="date" id="data">
+            </div>
+        </div>
+        <div>
+            <div>
+                <label for="mensagem">Observação (Mensagem)</label>
+                <input type="text" id="mensagem" placeholder="Descreva sua experiência...">
+            </div>
+        </div>
+        <div>
+            <div>
+                <button id="enviar">Enviar</button>
+            </div>
+        </div>
+    </div> <script src="../js/avaliacao_novo.js"></script>
     <script src="../js/valida_sessao.js"></script>
-
 </body>
 </html>

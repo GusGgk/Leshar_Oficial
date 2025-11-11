@@ -547,3 +547,20 @@ main {
 .logo {
     height: 40px;
 }
+#lista tbody tr td a[href*="avaliacao_novo.html"] {
+    background: linear-gradient(135deg, rgba(58, 175, 131, 0.15), rgba(58, 175, 131, 0.25));
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+#lista tbody tr td a[href*="avaliacao_novo.html"]::after {
+    content: '⭐'; /* Ícone de estrela para avaliar */
+    margin-left: 5px;
+}
+
+#lista tbody tr td a[href*="avaliacao_novo.html"]:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(58, 175, 131, 0.4);
+}

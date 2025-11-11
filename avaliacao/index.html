@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avaliações de Aulas</title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="../aulas/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
     
 <body>
-      <header class="topbar">
+  <header class="topbar">
     <img class="logo" src="../images/logo.png" alt="Logo da Leshar">
     <div class="search-bar">
       <input type="text" placeholder="Pesquisar...">
@@ -40,6 +40,11 @@
             </a>
         </li>      
         <li>
+            <a href="../avaliacao/index.html">
+            <i class="fa-solid fa-check"></i> Avaliações
+            </a>
+        </li>
+        <li>
             <a href="#">
             <i class="fa-solid fa-users"></i> Conexões
             </a>
@@ -61,12 +66,16 @@
         <i class="fa-solid fa-right-from-bracket"></i> Sair
     </button>
     </aside>
+    
+    <main>
         <div id="titulo">
-            <h1>Aqui você pode avaliar suas aulas</h1>
+            <h1>Avaliação de aulas</h1>
             <p>Aqui você pode editar, criar e excluir as avaliações das aulas.</p>
         </div>
         <div id="lista">
         </div>
+    </main>
+    
     </div>
     <script src="../js/avaliacao.js"></script>
     <script src="../js/valida_sessao.js"></script>
