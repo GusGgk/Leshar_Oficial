@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar nova Habilidade</title>
+    <link rel="stylesheet" href="../aulas/aula_novo.css">
+</head>
+<body>
+
+    <div>
+
+        <h1>Criar nova habilidade</h1>
+        <hr>
+        <p>
+            Descreva a habilidade que você deseja ensinar.
+        </p>
+        <div>
+            <div>
+                <label for="nome">Nome da Habilidade</label>
+                <input type="text" id="nome" placeholder="Ex: Tocar violão (básico)">
+            </div>
+        </div>
+        <div>
+            <div>
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" placeholder="Ex: Ensino os primeiros acordes e ritmos">
+            </div>
+        </div>
+        <div>
+            <div>
+                <label for="categoria">Categoria</label>
+                <select id="categoria" style="width: 100%; padding: 1rem 1.5rem; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 1rem; font-family: 'Poppins', sans-serif; background: rgba(255, 255, 255, 0.9);">
+                    <option value="">Carregando categorias...</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <div>
+                <button id="enviar">Enviar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="../js/habilidade_nova.js"></script>
+    <script src="../js/valida_sessao.js"></script>
+
+</body>
+</html>

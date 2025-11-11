@@ -21,13 +21,11 @@ body {
     overflow-x: hidden;
 }
 
-/* ========== LAYOUT PRINCIPAL ========== */
 .page {
     display: flex;
     min-height: 100vh;
 }
 
-/* ========== SIDEBAR ESQUERDA ========== */
 .sidebar-left {
     width: 280px;
     background: rgba(255, 255, 255, 0.98);
@@ -154,12 +152,15 @@ body {
     border-radius: 10px;
 }
 
-/* ========== CONTEÚDO PRINCIPAL ========== */
-#titulo {
+main {
     flex: 1;
     margin-left: 280px;
-    padding: 1.5rem 2.5rem 0.5rem;
-    min-height: auto;
+    padding: 1.5rem 2.5rem 2rem;
+    min-height: 100vh;
+}
+
+#titulo {
+    padding-bottom: 0.5rem;
 }
 
 #titulo h1 {
@@ -181,11 +182,9 @@ body {
 }
 
 #lista {
-    margin-left: 280px;
-    padding: 0 2.5rem 2rem;
+    /* Estilos de margin e padding removidos */
 }
 
-/* ========== BOTÃO NOVO REGISTRO ========== */
 #titulo #novo {
     background: var(--primary-color);
     color: white;
@@ -215,7 +214,6 @@ body {
     box-shadow: 0 8px 20px rgba(249, 136, 60, 0.4);
 }
 
-/* ========== TABELA DE AULAS ========== */
 #lista table {
     width: 100%;
     background: rgba(255, 255, 255, 0.98);
@@ -346,7 +344,6 @@ body {
     box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
 }
 
-/* Mensagem de lista vazia */
 #lista:empty::after {
     content: 'Nenhuma aula cadastrada ainda. Clique em "Novo Registro" para começar!';
     display: block;
@@ -361,7 +358,6 @@ body {
     margin-top: 0.5rem;
 }
 
-/* ========== ANIMAÇÕES ========== */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -384,30 +380,34 @@ body {
 .aula-card:nth-child(5) { animation-delay: 0.25s; }
 .aula-card:nth-child(6) { animation-delay: 0.3s; }
 
-/* ========== RESPONSIVIDADE ========== */
 @media (max-width: 900px) {
     .sidebar-left {
         width: 240px;
     }
-    
-    #titulo,
-    #lista {
+
+    main {
         margin-left: 240px;
         padding: 1.2rem;
     }
-    
-    #titulo {
-        padding: 1.2rem 1.2rem 0.5rem;
+
+    #titulo,
+    #lista {
+        margin-left: 0;
+        padding: 0;
     }
-    
+
+    #titulo {
+        padding-bottom: 0.5rem;
+    }
+
     #titulo h1 {
         font-size: 1.7rem;
     }
-    
+
     #lista table {
         font-size: 0.85rem;
     }
-    
+
     #lista thead tr th,
     #lista tbody tr td {
         padding: 0.8rem 1rem;
@@ -419,26 +419,30 @@ body {
         transform: translateX(-100%);
         transition: transform 0.3s ease;
     }
-    
+
     .sidebar-left.active {
         transform: translateX(0);
     }
-    
-    #titulo,
-    #lista {
+
+    main {
         margin-left: 0;
         padding: 1rem;
     }
-    
-    #titulo {
-        padding: 1rem 1rem 0.5rem;
+
+    #titulo,
+    #lista {
+        margin-left: 0;
+        padding: 0;
     }
-    
+
+    #titulo {
+        padding-bottom: 0.5rem;
+    }
+
     #titulo h1 {
         font-size: 1.5rem;
     }
-    
-    /* Tabela responsiva - empilhamento vertical */
+
     #lista table,
     #lista thead,
     #lista tbody,
@@ -447,13 +451,13 @@ body {
     #lista tr {
         display: block;
     }
-    
+
     #lista thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
-    
+
     #lista tbody tr {
         margin-bottom: 1rem;
         border: 2px solid #e0e0e0;
@@ -461,18 +465,18 @@ body {
         padding: 0.8rem;
         background: white;
     }
-    
+
     #lista tbody tr:hover {
         transform: scale(1.02);
     }
-    
+
     #lista tbody tr td {
         border: none;
         position: relative;
         padding: 0.6rem 0.6rem 0.6rem 50%;
         text-align: left;
     }
-    
+
     #lista tbody tr td::before {
         content: attr(data-label);
         position: absolute;
@@ -484,14 +488,14 @@ body {
         color: var(--primary-color);
         font-size: 0.8rem;
     }
-    
+
     #lista tbody tr td:last-child {
         text-align: left;
         padding-top: 0.8rem;
         display: flex;
         gap: 0.4rem;
     }
-    
+
     #lista tbody tr td a {
         flex: 1;
         text-align: center;
@@ -501,35 +505,40 @@ body {
 }
 
 @media (max-width: 480px) {
-    #titulo,
-    #lista {
+
+    main {
         padding: 0.8rem;
     }
-    
-    #titulo {
-        padding: 0.8rem 0.8rem 0.3rem;
+
+    #titulo,
+    #lista {
+        padding: 0;
     }
-    
+
+    #titulo {
+        padding-bottom: 0.3rem;
+    }
+
     #titulo h1 {
         font-size: 1.3rem;
     }
-    
+
     #titulo p {
         font-size: 0.85rem;
     }
-    
+
     #titulo #novo {
         width: 100%;
         justify-content: center;
         padding: 8px 20px;
         font-size: 0.9rem;
     }
-    
+
     #lista tbody tr td {
         padding: 0.5rem 0.5rem 0.5rem 45%;
         font-size: 0.8rem;
     }
-    
+
     #lista tbody tr td::before {
         left: 0.5rem;
         font-size: 0.75rem;

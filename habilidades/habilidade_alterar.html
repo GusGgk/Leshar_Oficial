@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Habilidade</title>
+    <link rel="stylesheet" href="../aulas/aula_alterar.css">
+</head>
+<body>
+    <h1>Alteração de Habilidade.</h1>
+    <hr>
+    <p>
+        Pode alterar os dados da habilidade criada.
+    </p>
+    <div>
+        <div>
+            <label for="nome">Nome da Habilidade</label>
+            <input type="text" id="nome">
+            <input type="hidden" id="id">
+        </div>
+    </div>
+     <div>
+        <div>
+            <label for="descricao">Descrição</label>
+            <input type="text" id="descricao">
+        </div>
+    </div>
+     <div>
+        <div>
+            <label for="categoria">Categoria</label>
+            <select id="categoria" style="width: 100%; padding: 0.9rem 1.2rem; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 0.95rem; font-family: 'Poppins', sans-serif; background: rgba(255,255,255,0.9);">
+                <option value="">Carregando...</option>
+            </select>
+        </div>
+    </div>
+    <div>
+        <div>
+            <button id="enviar">Enviar</button>
+        </div>
+    </div>
+
+    <script src="../js/habilidade_alterar.js"></script>
+    <script src="../js/valida_sessao.js"></script>
+</body>
+</html>
