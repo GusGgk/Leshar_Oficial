@@ -35,6 +35,12 @@ function montarAtalhos(){
   btnAulas.style.cursor = 'pointer';
   btnAulas.onclick = () => { window.location.href = '../aulas/'; };
 
+  const btnCategorias = document.createElement('button');
+  btnCategorias.textContent = 'Gerenciar Categorias';
+  btnCategorias.style.padding = '10px 16px';
+  btnCategorias.style.cursor = 'pointer';
+  btnCategorias.onclick = () => { window.location.href = '../admin/categorias.html'; };
+
   const btnSair = document.createElement('button');
   btnSair.id = 'sair';
   btnSair.textContent = 'Sair';
@@ -54,6 +60,7 @@ function montarAtalhos(){
 
   wrap.appendChild(btnUsuarios);
   wrap.appendChild(btnAulas);
+  wrap.appendChild(btnCategorias);
   wrap.appendChild(btnSair);
 
   document.body.appendChild(wrap);
