@@ -8,7 +8,6 @@ $retorno = [
     "data"=> []
 ];
 
-// 1. Validação de ADM 
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['tipo_usuario'] !== 'ADM'){
     $retorno["mensagem"] = "Acesso negado. Requer privilégios de Administrador.";
     header('Content-Type: application/json;charset=utf-8');
@@ -16,7 +15,6 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['tipo_usuario'] !== 'AD
     exit;
 }
 
-// 2. Lógica de exclusão 
 if(isset($_GET['id'])){ 
     $id = (int)$_GET['id'];     
     $stmt = $conexao->prepare("DELETE FROM categoria_habilidade WHERE id = ?"); 

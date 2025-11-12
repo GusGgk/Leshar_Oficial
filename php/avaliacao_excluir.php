@@ -38,7 +38,7 @@ if(isset($_GET['id'])){ // verifica se o id foi passado via GET
         "data"=> []
     ];
 }
-$conexao->close(); // fecha a conexao com o banco de dados
+$conexao->close(); 
 
 header('Content-Type: application/json;charset=utf-8'); 
 echo json_encode($retorno); // converte o array de retorno em json e exibe na tela

@@ -12,7 +12,6 @@ if (isset($_POST['CadastroNome']) && isset($_POST['CadastroEmail']) && isset($_P
     $email = $_POST['CadastroEmail'];
     $senha = password_hash($_POST['CadastroSenha'], PASSWORD_DEFAULT);
 
-    // 1. Verifica se e-mail já existe na tabela usuario
     $sql = $conexao->prepare("SELECT id FROM usuario WHERE email = ?");
     $sql->bind_param("s", $email);
     $sql->execute();
@@ -23,7 +22,7 @@ if (isset($_POST['CadastroNome']) && isset($_POST['CadastroEmail']) && isset($_P
         $retorno['mensagem'] = 'Email já cadastrado.';
         $sql->close();
     } else {
-        $sql->close(); // Fecha a verificação anterior
+        $sql->close(); 
 
         $sql_insert = $conexao->prepare("INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)");
         $sql_insert->bind_param("sss", $nome, $email, $senha);

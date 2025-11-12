@@ -2,14 +2,13 @@
 include_once("conexao.php");
 session_start();
 
-// Estrutura padrão de retorno
+
 $retorno = [
     "status" => "erro",
     "mensagem" => "",
     "data" => []
 ];
 
-// verificar sessão e tipo de usuário
 if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['tipo_usuario'] !== 'ADM') {
     $retorno["mensagem"] = "Acesso negado. Requer privilégios de Administrador.";
     header('Content-Type: application/json;charset=utf-8');
@@ -66,7 +65,6 @@ if ($result->num_rows > 0) {
 $checkStmt->close();
 $conexao->close();
 
-// retorno  
 header('Content-Type: application/json;charset=utf-8');
 echo json_encode($retorno);
 ?>

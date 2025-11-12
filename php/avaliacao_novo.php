@@ -20,7 +20,7 @@ if ($participante_aula_id <= 0) {
     exit;
 }
 if (empty($data)) {
-    $data = date('Y-m-d'); //data atual se não for enviada
+    $data = date('Y-m-d'); 
 }
 
 $stmt = $conexao->prepare("INSERT INTO avaliacao (pontuacao, data, mensagem, participante_aula_id)

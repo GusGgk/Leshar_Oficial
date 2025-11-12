@@ -40,7 +40,7 @@ if($resultado->num_rows > 0){
     $retorno = [
         "status" => "ok",
         "mensagem" => "Não encontrou registros",
-        "data" => [] // data vazia
+        "data" => [] 
     ];
 }
 

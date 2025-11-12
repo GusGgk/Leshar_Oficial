@@ -1,4 +1,3 @@
-// Selecionando os elementos do DOM
 const card = document.querySelector('.card');
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');

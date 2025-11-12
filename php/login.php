@@ -32,7 +32,7 @@ if ($resultado->num_rows > 0) {
     if (password_verify($senha, $usuario['senha'])) {
         $senhaConfere = true;
     } else if ($usuario['senha'] === $senha) {
-        // Fallback: senha em texto puro no banco (migração automática)
+        // senha em texto puro no banco (migração automática)
         $senhaConfere = true;
         $novoHash = password_hash($senha, PASSWORD_DEFAULT);
         $upd = $conexao->prepare("UPDATE usuario SET senha = ? WHERE id = ?");
