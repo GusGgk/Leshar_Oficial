@@ -1,21 +1,115 @@
-CRUDS:
-Aulas: aula_novo.js, aula_alterar.js, aula_get.php, aula_excluir.php e aula.js para listar
+1- BANCO DE DADOS:
+ALTER TABLE user ADD COLUMN instagram varchar(50);
 
-Habilidades: habilidades.js, habilidade_nova.js, habilidade_alterar.js, habilidade_get.php e habilidade_excluir.php.
 
-Avaliações: avaliacao.js, avaliacao_novo.js, avaliacao_alterar.js, avaliacao_get.php e avaliacao_excluir.php.
+2- perfil_novo.php -> na parte das atribuições
+tem lá $nome, $email, $senha e tem que colocar $instagram = $_POST['instagram'];
 
-Perfis (Usuários): perfil.js, perfil_novo.js, perfil_alterar.js, perfil_get.php e perfil_excluir.php.
 
-Categorias (Admin): admin_categorias.js, admin_categoria_nova.js, admin_categoria_alterar.js, categoria_get.php e categoria_excluir.php.
+Depois tem que ir no stmt (a query prepare) alterar e por o novo atributo lá:
+$stmt = $conexao->prepare("INSERT INTO usuario(nome, email, senha, bio, localizacao, instagram, data_cadastro) VALUES (?,?,?,?,?,?,NOW())");
+Lembrando que tem que adicionar mais uma interrogação 
+depois tem que por no bind_param:
+$stmt->bind_param("sssss", $nome, $email, $senha, $bio, $localizacao, $instagram);
+Lembrando que tem que adicionar mais um S ali no primeiro parâmetro
 
--------------------------------------------------------------------------
 
-Adicionando autor na tabela habilidade:
 
-1. ALTER TABLE habilidade ADD COLUMN autor varchar(100);
-2. ...novo.php -> adiciona o campo na tabela ($autor = $_POST['autor'] ?? '';) -> adiciona na $stmt = conexao e $stmt->bind_param (não esquecer dos ?,?,? e dos ssss
-3. ...novo.js -> adiciona no var e no fd.append copiando a linha de cima
-4. ...novo.html -> copia a div do input de cima e muda os atributos
-5. ...(habilidade).js -> dentro da function carregarLista() adiciona na table e embaixo na <td>${objeto.(autor)}</td>
-6. ...get.php(OPCIONAL) -> se o crud for de habilidades ou perfil, colocar o atributo nos dois $stmt = $conexao->prepare
+3. perfil_novo.js
+Dentro da função async function novo() -> adicionar variável do instagram:
+var instagram = document.getElementById("instagram").value;
+
+dentro do if, adicionar novo fd.append:
+fd.append('instagram', instagram);
+adicionar também > 0 && mensagem.length dentro do if 
+
+
+
+4. perfil_novo.html -> copia uma das divs lá e muda o id da label e input 
+<div>
+        <div>
+            <label for="instagram">Instagram</label>
+            <input type="text" id="instagram">
+        </div>
+    </div>
+
+
+5. perfil.js na função carregarLista() adicionar no th abaixo do de localização
+
+
+<th>Instagram</th>
+
+depois, dentro do for, adicionar no html+
+<td>${objeto.instagram}</td>
+
+
+
+
+6. get.php -> tem que colocar o atributo nos três $stmt do perfil
+
+$stmt= $conexao->prepare("SELECT id, nome, email, bio, localizacao, instagram,  tipo_usuario, data_cadastro FROM usuario WHERE id = ?");
+
+depois no if e no else
+
+if:
+
+$stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao,tipo_usuario, data_cadastro FROM usuario");
+
+else:
+
+$stmt = $conexao->prepare("SELECT id, nome, email, bio, localizacao, data_cadastro FROM usuario WHERE id = ?");
+
+SE FOR AULA: adicionar a.assunto, dentro do select 
+
+
+<<<<<<<<<<<<<<<<<<<<<<Opcional agora, parte de EDITAR >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+7. perfil_alterar.html
+
+inserir div com instagram
+
+
+<div>
+        <div>
+            <label for="instagram">Instagram</label>
+            <input type="text" id="instagram">
+        </div>
+    </div>
+
+
+
+
+
+
+8. perfil_alterar.js
+na função fase1() adicionar:
+
+document.getElementById("instagram").value = reg.instagram;
+
+
+e na fase2() 
+var instagram = document.getElementById("instagram").value;
+
+por no if -> (instagram.length > 0)
+e também
+fd.append('instagram', instagram);
+
+
+
+9. perfil_alterar.php
+dentro do else junto com os outros por:
+$instagram = $_POST['instagram'] ?? '';
+
+e no outro else, mudar o stmt:
+
+$stmt = $conexao->prepare("UPDATE usuario SET nome = ?, email = ?, bio = ?, localizacao = ?, instagram = ? WHERE id = ?");
+
+
+$stmt->bind_param("sssssi", $nome, $email, $bio, $localizacao, $instagram , $id);
+
+lembrando que tem um S a mais aí
+
+
+
