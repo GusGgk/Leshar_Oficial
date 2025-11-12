@@ -126,6 +126,18 @@ MODIFY COLUMN mensagem TEXT;
 INSERT INTO usuario(nome, email, senha, tipo_usuario)
 VALUES 
 ('ADM', 'adm@adm.com', 'adm', 'ADM'); 
+INSERT INTO aluno (usuario_id)
+VALUES (1);
+INSERT INTO mentor (usuario_id, reputacao)
+VALUES (1, 100);
+
+INSERT INTO categoria_habilidade (nome)
+VALUES
+('Programação'),
+('Design'),
+('Marketing'),
+('Negócios'),
+('Música');
 
 ALTER TABLE avaliacao
 ADD COLUMN mensagem TEXT NULL AFTER data;
