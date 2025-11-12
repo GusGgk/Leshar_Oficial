@@ -1,0 +1,21 @@
+CRUDS:
+Aulas: aula_novo.js, aula_alterar.js, aula_get.php, aula_excluir.php e aula.js para listar
+
+Habilidades: habilidades.js, habilidade_nova.js, habilidade_alterar.js, habilidade_get.php e habilidade_excluir.php.
+
+Avaliações: avaliacao.js, avaliacao_novo.js, avaliacao_alterar.js, avaliacao_get.php e avaliacao_excluir.php.
+
+Perfis (Usuários): perfil.js, perfil_novo.js, perfil_alterar.js, perfil_get.php e perfil_excluir.php.
+
+Categorias (Admin): admin_categorias.js, admin_categoria_nova.js, admin_categoria_alterar.js, categoria_get.php e categoria_excluir.php.
+
+-------------------------------------------------------------------------
+
+Adicionando autor na tabela habilidade:
+
+1. ALTER TABLE habilidade ADD COLUMN autor varchar(100);
+2. ...novo.php -> adiciona o campo na tabela ($autor = $_POST['autor'] ?? '';) -> adiciona na $stmt = conexao e $stmt->bind_param (não esquecer dos ?,?,? e dos ssss
+3. ...novo.js -> adiciona no var e no fd.append copiando a linha de cima
+4. ...novo.html -> copia a div do input de cima e muda os atributos
+5. ...(habilidade).js -> dentro da function carregarLista() adiciona na table e embaixo na <td>${objeto.(autor)}</td>
+6. ...get.php(OPCIONAL) -> se o crud for de habilidades ou perfil, colocar o atributo nos dois $stmt = $conexao->prepare
