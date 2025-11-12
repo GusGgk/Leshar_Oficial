@@ -11,7 +11,6 @@ $retorno = [
 if(isset($_GET['id'])){
     $id = $_GET['id'];
 
-    // Atribuição
     $hora_inicio = $_POST['hora_inicio'];
     $hora_fim = $_POST['hora_fim'];
     $mensagem = $_POST['mensagem'];
@@ -44,7 +43,6 @@ if(isset($_GET['id'])){
     ];
 }
 
- // fecha a conexao com o banco de dados
 $conexao->close();
 header('Content-Type: application/json;charset=utf-8');
 echo json_encode($retorno); // converte o array de retorno em json e exibe
